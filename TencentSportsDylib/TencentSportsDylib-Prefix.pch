@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'TencentSportsDylib' target in the 'TencentSportsDylib' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import "/opt/theos/Prefix.pch"  //path/to/theos/Prefix.pch
+#endif
