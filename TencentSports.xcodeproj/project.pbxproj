@@ -52,7 +52,6 @@
 /* Begin PBXFileReference section */
 		4F5BF4D6212D15EE00ECA403 /* TencentSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TencentSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BF4D9212D15EE00ECA403 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		4F5BF4DA212D15EE00ECA403 /* Target.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Target.plist; sourceTree = "<group>"; };
 		4F5BF4DC212D15EE00ECA403 /* quick-resign.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "quick-resign.sh"; path = "Scripts/quick-resign.sh"; sourceTree = "<group>"; };
 		4F5BF4DE212D15EE00ECA403 /* MethodTraceConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = MethodTraceConfig.plist; path = Config/MethodTraceConfig.plist; sourceTree = "<group>"; };
 		4F5BF4E1212D15EE00ECA403 /* put ipa or app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put ipa or app here"; path = "TargetApp/put ipa or app here"; sourceTree = "<group>"; };
@@ -121,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				4F5BF4D9212D15EE00ECA403 /* icon.png */,
-				4F5BF4DA212D15EE00ECA403 /* Target.plist */,
 				4F5BF4E2212D15EE00ECA403 /* Info.plist */,
 				4F5BF4DB212D15EE00ECA403 /* Scripts */,
 				4F5BF4DD212D15EE00ECA403 /* Config */,
@@ -525,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9AD932V2V;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = NO;
@@ -547,6 +546,7 @@
 					"$(MonkeyDevPath)/include",
 					"$(MonkeyDevTheosPath)/vendor/include/**",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/TencentSports/Info.plist";
 				INSTALL_PATH = "@executable_path/Frameworks/libTencentSportsDylib.dylib";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -570,8 +570,8 @@
 					"-weak_library",
 					"/usr/lib/libstdc++.dylib",
 					"-lsubstrate",
-					"-framework",
-					Cycript,
+					"-l",
+					cycript,
 					"-framework",
 					RevealServer,
 				);
@@ -586,6 +586,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = W9AD932V2V;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_BITCODE = NO;
@@ -607,6 +608,7 @@
 					"$(MonkeyDevPath)/include",
 					"$(MonkeyDevTheosPath)/vendor/include/**",
 				);
+				INFOPLIST_FILE = "$(SRCROOT)/TencentSports/Info.plist";
 				INSTALL_PATH = "@executable_path/Frameworks/libTencentSportsDylib.dylib";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -640,6 +642,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9AD932V2V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TencentSports/Info.plist;
 				MONKEYDEV_ADD_SUBSTRATE = YES;
@@ -659,6 +662,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W9AD932V2V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TencentSports/Info.plist;
 				MONKEYDEV_ADD_SUBSTRATE = YES;
