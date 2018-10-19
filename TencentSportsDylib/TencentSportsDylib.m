@@ -19,11 +19,11 @@
 
 @implementation NSObject (test)
 
-+ (void)load
-{
+//+ (void)load
+//{
 //    Class originClass = NSClassFromString(@"QSMatchDetailViewController");
 //    [self ff_instancenSwizzleWithClass:originClass originSelector:@selector(viewDidAppear:) swizzleSelector:@selector(ff_viewDidAppear:)];
-}
+//}
 
 //- (void)ff_viewDidAppear:(BOOL)animation
 //{
@@ -33,6 +33,28 @@
 //    }
 //
 //    return [self ff_viewDidAppear:animation];
+//}
+
+//+ (UIView *)findGoalView:(UIView *)objectView
+//{
+//    if (objectView.subviews.count == 0) {
+//        return nil;
+//    }
+//
+//    for (UIView *view in objectView.subviews) {
+//        //QSMPADViewController QSADViewController
+//        Class vcClass = NSClassFromString(@"QSADViewController");
+//        if ([view.nextResponder isKindOfClass:[vcClass class]]) {
+//            return view;
+//        } else {
+//            UIView *tempView = [self findGoalView:view];
+//            if (tempView) {
+//                return tempView;
+//            }
+//        }
+//    }
+//
+//    return nil;
 //}
 
 @end
@@ -52,7 +74,6 @@ CHConstructor{
 
 CHDeclareClass(TADSplashManager);
 CHDeclareClass(TADVideoViewController);
-CHDeclareClass(QSMatchDetailViewController);
 
 
 #pragma clang diagnostic push
@@ -61,19 +82,19 @@ CHDeclareClass(QSMatchDetailViewController);
 #pragma clang diagnostic pop
 
 // CHMethod()这个宏的格式是：参数的个数，返回值的类型，类的名称，selector的名称，selector的类型，selector对应的参数的变量名。
-//CHMethod(1, id, TADSplashManager, splashItemForItem, id, arg1){
-//
-//    NSLog(@"hook 到闪屏的函数啦");
-//    NSLog(@"self = %@", self);
-//    //    return CHSuper(1, TADSplashManager, splashItemForItem, arg1);
-//    //    NSLog(@"hook到函数啦，参数为，arg1 = %@, 返回值为 = %@", arg1, value);
-//    //
-//    return nil;
-//}
+CHMethod(1, id, TADSplashManager, splashItemForItem, id, arg1){
+
+    NSLog(@"hook 到闪屏的函数啦");
+    NSLog(@"self = %@", self);
+    //    return CHSuper(1, TADSplashManager, splashItemForItem, arg1);
+    //    NSLog(@"hook到函数啦，参数为，arg1 = %@, 返回值为 = %@", arg1, value);
+    //
+    return nil;
+}
 
 
-///< 直接移除广告的view不会让播放器开始直播
-CHMethod(1, void, TADVideoViewController, viewDidAppear, id, arg1){
+///< 注意参数类型，此处给BOOL，不要给id
+CHMethod(1, void, TADVideoViewController, viewDidAppear, BOOL, arg1){
 
     NSLog(@"hook 到TADVideoViewController的函数啦");
     NSLog(@"self = %@", self);
@@ -83,39 +104,22 @@ CHMethod(1, void, TADVideoViewController, viewDidAppear, id, arg1){
         NSLog(@"调用了TADVideoViewController 的 skipAdPlay函数");
     }
 
-//    if ([object respondsToSelector:@selector(cancelAdPlay)]) {
-//        [object performSelector:@selector(cancelAdPlay)];
-//        NSLog(@"调用了TADVideoViewController 的 cancelAdPlay函数");
-//    }
-
     return CHSuper(1, TADVideoViewController, viewDidAppear, arg1);
 }
 
-//CHMethod(1, void, QSMatchDetailViewController, viewDidAppear, id, arg1){
-//
-//    NSLog(@"hook 到QSMatchDetailViewController的函数啦");
-////    NSLog(@"self = %@", self);
-////    NSObject *object = self;
-////    if ([object respondsToSelector:@selector(removeAd)]) {
-////        [object performSelector:@selector(removeAd)];
-////        NSLog(@"调用了QSMatchDetailViewController 的 removeAd 函数");
-////    }
-//
-//
-////    return CHSuper(1, QSMatchDetailViewController, viewDidAppear, arg1);
-//}
+
+
+
 
 
 CHConstructor{
-//    CHLoadLateClass(TADSplashManager);
-    //CHClassHook()这个宏的格式是：参数的个数，返回值的类型，类的名称，selector的名称。
-//    CHClassHook(1, TADSplashManager, splashItemForItem);
+    CHLoadLateClass(TADSplashManager);
+//    CHClassHook()这个宏的格式是：参数的个数，返回值的类型，类的名称，selector的名称。
+    CHClassHook(1, TADSplashManager, splashItemForItem);
     
     CHLoadLateClass(TADVideoViewController);
     CHClassHook(1, TADVideoViewController, viewDidAppear);
     
-//    CHLoadLateClass(QSMatchDetailViewController);
-//    CHClassHook(1, QSMatchDetailViewController, viewDidAppear);
     
 }
 
