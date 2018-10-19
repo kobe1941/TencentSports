@@ -12,6 +12,30 @@
 #import <CaptainHook/CaptainHook.h>
 #import <UIKit/UIKit.h>
 #import <Cycript/Cycript.h>
+#import "NSObject+methodSwizzle.h"
+
+@interface NSObject (test)
+@end
+
+@implementation NSObject (test)
+
++ (void)load
+{
+//    Class originClass = NSClassFromString(@"QSMatchDetailViewController");
+//    [self ff_instancenSwizzleWithClass:originClass originSelector:@selector(viewDidAppear:) swizzleSelector:@selector(ff_viewDidAppear:)];
+}
+
+//- (void)ff_viewDidAppear:(BOOL)animation
+//{
+//    Class originClass = NSClassFromString(@"QSMatchDetailViewController");
+//    if ([self isKindOfClass:originClass.class]) {
+////        [self performSelector:@selector(removeAd)];
+//    }
+//
+//    return [self ff_viewDidAppear:animation];
+//}
+
+@end
 
 CHConstructor{
     NSLog(INSERT_SUCCESS_WELCOME);
@@ -26,55 +50,72 @@ CHConstructor{
 }
 
 
-CHDeclareClass(CustomViewController)
+CHDeclareClass(TADSplashManager);
+CHDeclareClass(TADVideoViewController);
+CHDeclareClass(QSMatchDetailViewController);
+
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wstrict-prototypes"
 
-//add new method
-CHDeclareMethod1(void, CustomViewController, newMethod, NSString*, output){
-    NSLog(@"This is a new method : %@", output);
-}
-
 #pragma clang diagnostic pop
 
-CHOptimizedClassMethod0(self, void, CustomViewController, classMethod){
-    NSLog(@"hook class method");
-    CHSuper0(CustomViewController, classMethod);
+// CHMethod()这个宏的格式是：参数的个数，返回值的类型，类的名称，selector的名称，selector的类型，selector对应的参数的变量名。
+//CHMethod(1, id, TADSplashManager, splashItemForItem, id, arg1){
+//
+//    NSLog(@"hook 到闪屏的函数啦");
+//    NSLog(@"self = %@", self);
+//    //    return CHSuper(1, TADSplashManager, splashItemForItem, arg1);
+//    //    NSLog(@"hook到函数啦，参数为，arg1 = %@, 返回值为 = %@", arg1, value);
+//    //
+//    return nil;
+//}
+
+
+///< 直接移除广告的view不会让播放器开始直播
+CHMethod(1, void, TADVideoViewController, viewDidAppear, id, arg1){
+
+    NSLog(@"hook 到TADVideoViewController的函数啦");
+    NSLog(@"self = %@", self);
+    NSObject *object = self;
+    if ([object respondsToSelector:@selector(skipAdPlay)]) {
+        [object performSelector:@selector(skipAdPlay)];
+        NSLog(@"调用了TADVideoViewController 的 skipAdPlay函数");
+    }
+
+//    if ([object respondsToSelector:@selector(cancelAdPlay)]) {
+//        [object performSelector:@selector(cancelAdPlay)];
+//        NSLog(@"调用了TADVideoViewController 的 cancelAdPlay函数");
+//    }
+
+    return CHSuper(1, TADVideoViewController, viewDidAppear, arg1);
 }
 
-CHOptimizedMethod0(self, NSString*, CustomViewController, getMyName){
-    //get origin value
-    NSString* originName = CHSuper(0, CustomViewController, getMyName);
-    
-    NSLog(@"origin name is:%@",originName);
-    
-    //get property
-    NSString* password = CHIvar(self,_password,__strong NSString*);
-    
-    NSLog(@"password is %@",password);
-    
-    [self newMethod:@"output"];
-    
-    //set new property
-    self.newProperty = @"newProperty";
-    
-    NSLog(@"newProperty : %@", self.newProperty);
-    
-    //change the value
-    return @"AloneMonkey";
-    
-}
+//CHMethod(1, void, QSMatchDetailViewController, viewDidAppear, id, arg1){
+//
+//    NSLog(@"hook 到QSMatchDetailViewController的函数啦");
+////    NSLog(@"self = %@", self);
+////    NSObject *object = self;
+////    if ([object respondsToSelector:@selector(removeAd)]) {
+////        [object performSelector:@selector(removeAd)];
+////        NSLog(@"调用了QSMatchDetailViewController 的 removeAd 函数");
+////    }
+//
+//
+////    return CHSuper(1, QSMatchDetailViewController, viewDidAppear, arg1);
+//}
 
-//add new property
-CHPropertyRetainNonatomic(CustomViewController, NSString*, newProperty, setNewProperty);
 
 CHConstructor{
-    CHLoadLateClass(CustomViewController);
-    CHClassHook0(CustomViewController, getMyName);
-    CHClassHook0(CustomViewController, classMethod);
+//    CHLoadLateClass(TADSplashManager);
+    //CHClassHook()这个宏的格式是：参数的个数，返回值的类型，类的名称，selector的名称。
+//    CHClassHook(1, TADSplashManager, splashItemForItem);
     
-    CHHook0(CustomViewController, newProperty);
-    CHHook1(CustomViewController, setNewProperty);
+    CHLoadLateClass(TADVideoViewController);
+    CHClassHook(1, TADVideoViewController, viewDidAppear);
+    
+//    CHLoadLateClass(QSMatchDetailViewController);
+//    CHClassHook(1, QSMatchDetailViewController, viewDidAppear);
+    
 }
 

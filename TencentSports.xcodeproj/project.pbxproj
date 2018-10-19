@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F1ABE9E21782B9D0016F86C /* UITextView+assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F1ABE9C21782B9D0016F86C /* UITextView+assert.h */; };
+		4F1ABE9F21782B9D0016F86C /* UITextView+assert.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1ABE9D21782B9D0016F86C /* UITextView+assert.m */; };
+		4F1ABEA221785AD00016F86C /* NSObject+methodSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1ABEA021785AD00016F86C /* NSObject+methodSwizzle.m */; };
+		4F1ABEA321785AD00016F86C /* NSObject+methodSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F1ABEA121785AD00016F86C /* NSObject+methodSwizzle.h */; };
 		4F5BF4DF212D15EE00ECA403 /* MethodTraceConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F5BF4DE212D15EE00ECA403 /* MethodTraceConfig.plist */; };
 		4F5BF4E9212D15EE00ECA403 /* libTencentSportsDylib.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F5BF4E8212D15EE00ECA403 /* libTencentSportsDylib.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F5BF4EE212D15EE00ECA403 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5BF4ED212D15EE00ECA403 /* JavaScriptCore.framework */; };
@@ -50,12 +54,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F1ABE9C21782B9D0016F86C /* UITextView+assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+assert.h"; sourceTree = "<group>"; };
+		4F1ABE9D21782B9D0016F86C /* UITextView+assert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+assert.m"; sourceTree = "<group>"; };
+		4F1ABEA021785AD00016F86C /* NSObject+methodSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+methodSwizzle.m"; sourceTree = "<group>"; };
+		4F1ABEA121785AD00016F86C /* NSObject+methodSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+methodSwizzle.h"; sourceTree = "<group>"; };
 		4F5BF4D6212D15EE00ECA403 /* TencentSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TencentSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BF4D9212D15EE00ECA403 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		4F5BF4DC212D15EE00ECA403 /* quick-resign.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "quick-resign.sh"; path = "Scripts/quick-resign.sh"; sourceTree = "<group>"; };
 		4F5BF4DE212D15EE00ECA403 /* MethodTraceConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = MethodTraceConfig.plist; path = Config/MethodTraceConfig.plist; sourceTree = "<group>"; };
 		4F5BF4E1212D15EE00ECA403 /* put ipa or app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put ipa or app here"; path = "TargetApp/put ipa or app here"; sourceTree = "<group>"; };
-		4F5BF4E2212D15EE00ECA403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F5BF4E8212D15EE00ECA403 /* libTencentSportsDylib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libTencentSportsDylib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F5BF4ED212D15EE00ECA403 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4F5BF4EF212D15EE00ECA403 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -106,6 +113,7 @@
 				4F5BF4D7212D15EE00ECA403 /* Products */,
 			);
 			sourceTree = "<group>";
+			wrapsLines = 1;
 		};
 		4F5BF4D7212D15EE00ECA403 /* Products */ = {
 			isa = PBXGroup;
@@ -120,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				4F5BF4D9212D15EE00ECA403 /* icon.png */,
-				4F5BF4E2212D15EE00ECA403 /* Info.plist */,
 				4F5BF4DB212D15EE00ECA403 /* Scripts */,
 				4F5BF4DD212D15EE00ECA403 /* Config */,
 				4F5BF4E0212D15EE00ECA403 /* TargetApp */,
@@ -165,6 +172,8 @@
 		4F5BF4F3212D15EE00ECA403 /* TencentSportsDylib */ = {
 			isa = PBXGroup;
 			children = (
+				4F1ABEA121785AD00016F86C /* NSObject+methodSwizzle.h */,
+				4F1ABEA021785AD00016F86C /* NSObject+methodSwizzle.m */,
 				4F5BF510212D15EF00ECA403 /* TencentSportsDylib.h */,
 				4F5BF512212D15EF00ECA403 /* TencentSportsDylib.m */,
 				4F5BF4F4212D15EE00ECA403 /* Logos */,
@@ -173,6 +182,8 @@
 				4F5BF508212D15EF00ECA403 /* AntiAntiDebug */,
 				4F5BF50B212D15EF00ECA403 /* fishhook */,
 				4F5BF506212D15EF00ECA403 /* Supporting Files */,
+				4F1ABE9C21782B9D0016F86C /* UITextView+assert.h */,
+				4F1ABE9D21782B9D0016F86C /* UITextView+assert.m */,
 			);
 			path = TencentSportsDylib;
 			sourceTree = "<group>";
@@ -240,7 +251,9 @@
 			files = (
 				4F5BF4FA212D15EE00ECA403 /* LLDBTools.h in Headers */,
 				4F5BF503212D15EF00ECA403 /* MethodTrace.h in Headers */,
+				4F1ABE9E21782B9D0016F86C /* UITextView+assert.h in Headers */,
 				4F5BF4FF212D15EE00ECA403 /* ANYMethodLog.h in Headers */,
+				4F1ABEA321785AD00016F86C /* NSObject+methodSwizzle.h in Headers */,
 				4F5BF50F212D15EF00ECA403 /* fishhook.h in Headers */,
 				4F5BF511212D15EF00ECA403 /* TencentSportsDylib.h in Headers */,
 			);
@@ -388,7 +401,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1ABEA221785AD00016F86C /* NSObject+methodSwizzle.m in Sources */,
 				4F5BF505212D15EF00ECA403 /* MethodTrace.m in Sources */,
+				4F1ABE9F21782B9D0016F86C /* UITextView+assert.m in Sources */,
 				4F5BF50A212D15EF00ECA403 /* AntiAntiDebug.m in Sources */,
 				4F5BF4F7212D15EE00ECA403 /* TencentSportsDylib.mm in Sources */,
 				4F5BF501212D15EE00ECA403 /* ANYMethodLog.m in Sources */,
@@ -575,6 +590,7 @@
 					"-framework",
 					RevealServer,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.sportskbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
@@ -633,6 +649,7 @@
 					"/usr/lib/libstdc++.dylib",
 					"-lsubstrate",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.sportskbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -652,7 +669,7 @@
 				MONKEYDEV_TARGET_APP = Optional;
 				PODS_CONFIGURATION_BUILD_DIR = "$BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = fwefweff.TencentSports;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.sportskbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -672,7 +689,7 @@
 				MONKEYDEV_TARGET_APP = Optional;
 				PODS_CONFIGURATION_BUILD_DIR = "$BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				PODS_ROOT = "${SRCROOT}/Pods";
-				PRODUCT_BUNDLE_IDENTIFIER = fwefweff.TencentSports;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tencent.sportskbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
