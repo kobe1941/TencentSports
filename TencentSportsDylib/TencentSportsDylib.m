@@ -74,7 +74,7 @@ CHConstructor{
 
 CHDeclareClass(TADSplashManager);
 CHDeclareClass(TADVideoViewController);
-
+CHDeclareClass(NSURLSession);
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wstrict-prototypes"
@@ -108,6 +108,81 @@ CHMethod(1, void, TADVideoViewController, viewDidAppear, BOOL, arg1){
 }
 
 
+static BOOL g_canCopyM3u8 = YES;
+/*********NSURLSession**********/
+typedef void(^CompletionBlock)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error);
+CHMethod(2, id, NSURLSession, dataTaskWithRequest, id, arg1, completionHandler, CompletionBlock, arg2){
+    
+    // arg1=NSURLRequest
+    NSURLRequest *request = (NSURLRequest *)arg1;
+    
+    NSString *urlString = request.URL.absoluteString;
+    NSLog(@"hook到函数啦 url = %@", urlString);
+    if ([urlString containsString:@"hls.bideo.qq.com"]) {
+        NSLog(@"hook到直播请求啦");
+        NSLog(@"线程回溯 = %@", [NSThread callStackSymbols]);
+    }
+    
+    CompletionBlock block = arg2;
+    if ([request.URL.absoluteString containsString:@"info.zb.video.qq.com"]) {
+        NSLog(@"hook到直播接口啦%@，参数为，request = %@", NSStringFromSelector(_cmd), arg1);
+        // arg2居然是null，天啦！！
+        __block BOOL isControllerRight = NO;
+        void(^tempBlock)(void) = ^{
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            UITabBarController *tabBarVC =  (UITabBarController *)window.rootViewController;
+            UINavigationController *vc = (UINavigationController *)tabBarVC.selectedViewController;
+            UIViewController *topVC = vc.topViewController;
+            if ([topVC isKindOfClass:[NSClassFromString(@"QSMatchDetailViewController") class]]) {
+                isControllerRight = YES;
+            }
+        };
+        
+        if ([NSThread isMainThread]) {
+            tempBlock();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), tempBlock);
+        }
+        
+        
+        if (g_canCopyM3u8 && isControllerRight) {
+            g_canCopyM3u8 = NO;
+            block = ^(NSData *tempData, NSURLResponse *tempResponse, NSError *tempError){
+                if (tempError) {
+                    NSLog(@"请求m3u8出错啦，error = %@", tempError);
+                    g_canCopyM3u8 = YES;
+                } else {
+                    NSLog(@"请求m3u8成功啦, response = %p, data = %p", tempResponse, tempData);
+                }
+            };
+        }
+        
+    }
+    
+    return CHSuper(2, NSURLSession, dataTaskWithRequest, arg1, completionHandler, arg2);
+}
+
+CHMethod(1, id, NSURLSession, dataTaskWithRequest, id, arg1){
+    // arg1=URL
+    NSURLRequest *request = (NSURLRequest *)arg1;
+    
+    NSString *urlString = request.URL.absoluteString;
+    NSLog(@"hook到函数啦 url = %@", urlString);
+    return CHSuper(1, NSURLSession, dataTaskWithRequest, arg1);
+}
+
+CHMethod(1, id, NSURLSession, dataTaskWithURL, id, arg1){
+    // arg1=URL
+    NSLog(@"hook到函数啦%@，参数 arg1 = %@", NSStringFromSelector(_cmd), arg1);
+    return CHSuper(1, NSURLSession, dataTaskWithURL, arg1);
+}
+
+CHMethod(2, id, NSURLSession, dataTaskWithURL, id, arg1, completionHandler, CompletionBlock, arg2){
+    // arg1=URL
+    NSLog(@"hook到函数啦%@，参数为 arg1 = %@", NSStringFromSelector(_cmd), arg1);
+    return CHSuper(2, NSURLSession, dataTaskWithURL, arg1, completionHandler, arg2);
+}
+
 
 
 
@@ -120,6 +195,11 @@ CHConstructor{
     CHLoadLateClass(TADVideoViewController);
     CHClassHook(1, TADVideoViewController, viewDidAppear);
     
+    CHLoadLateClass(NSURLSession);
+    CHClassHook(2, NSURLSession, dataTaskWithRequest, completionHandler);
+    CHClassHook(2, NSURLSession, dataTaskWithURL, completionHandler);
+    CHClassHook(1, NSURLSession, dataTaskWithRequest);
+    CHClassHook(1, NSURLSession, dataTaskWithURL);
     
 }
 
