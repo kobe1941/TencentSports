@@ -252,12 +252,13 @@ CHMethod(2, id, NSURLConnection, initWithRequest, id, arg1, delegate, id, arg2){
                             
                             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 60)];
                             label.textColor = [UIColor redColor];
-                            label.text = @"直播URL已复制到剪贴板~";
+                            label.text = @"直播URL已复制到剪贴板，去Safari看比赛吧~";
                             label.textAlignment = NSTextAlignmentCenter;
-                            label.font = [UIFont systemFontOfSize:16];
+                            label.numberOfLines = 0;
+                            label.font = [UIFont boldSystemFontOfSize:16];
                             label.layer.cornerRadius = 6;
                             label.clipsToBounds = YES;
-                            label.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+                            label.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.8];
                             
                             label.center = window.center;
                             [window addSubview:label];
