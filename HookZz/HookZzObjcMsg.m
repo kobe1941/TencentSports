@@ -91,8 +91,14 @@ void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic 
         return;
     }
     
+    if ([classStr hasPrefix:@"QSLog"] || [classStr hasPrefix:@"QSDatabase"]) {
+        return;
+    }
     
-    
+    // QSWeakedLinkedNode,QSWeakedLinkedList,QSCacheEntry,QSCache, MTAGCDAsyncSocket(socket)
+    // QSPropertyInfoEx,QSSportsMediaMatchInfo,
+    // LOTKeyframeGroup,LOTShapeGroup,LOTKeyframe,LOTLayer,LOTComposition,LOTAnimationCache,LOTAnimationView
+    // QSInMatchDetailTabBarCell,TADPlayerLoading,QSQueue
     
     
 //    if (strstr(className, "NS") && strstr(className, "UI")) {
