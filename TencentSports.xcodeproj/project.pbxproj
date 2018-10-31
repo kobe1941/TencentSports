@@ -28,6 +28,10 @@
 		4F5BF50F212D15EF00ECA403 /* fishhook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F5BF50E212D15EF00ECA403 /* fishhook.h */; };
 		4F5BF511212D15EF00ECA403 /* TencentSportsDylib.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F5BF510212D15EF00ECA403 /* TencentSportsDylib.h */; };
 		4F5BF513212D15EF00ECA403 /* TencentSportsDylib.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BF512212D15EF00ECA403 /* TencentSportsDylib.m */; };
+		4FD281092189B45B0026A1CD /* HookZzPrint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD281052189B45B0026A1CD /* HookZzPrint.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4FD2810A2189B45B0026A1CD /* HookZzObjcMsg.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD281062189B45B0026A1CD /* HookZzObjcMsg.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4FD2810B2189B45B0026A1CD /* libhookzz.static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD281072189B45B0026A1CD /* libhookzz.static.a */; };
+		4FD2810C2189B45B0026A1CD /* hookzz.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD281082189B45B0026A1CD /* hookzz.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +85,10 @@
 		4F5BF50E212D15EF00ECA403 /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fishhook.h; path = fishhook/fishhook.h; sourceTree = "<group>"; };
 		4F5BF510212D15EF00ECA403 /* TencentSportsDylib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TencentSportsDylib.h; sourceTree = "<group>"; };
 		4F5BF512212D15EF00ECA403 /* TencentSportsDylib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TencentSportsDylib.m; sourceTree = "<group>"; };
+		4FD281052189B45B0026A1CD /* HookZzPrint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HookZzPrint.m; sourceTree = "<group>"; };
+		4FD281062189B45B0026A1CD /* HookZzObjcMsg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HookZzObjcMsg.m; sourceTree = "<group>"; };
+		4FD281072189B45B0026A1CD /* libhookzz.static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhookzz.static.a; sourceTree = "<group>"; };
+		4FD281082189B45B0026A1CD /* hookzz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hookzz.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,7 @@
 				4F5BF4EE212D15EE00ECA403 /* JavaScriptCore.framework in Frameworks */,
 				4F5BF4F2212D15EE00ECA403 /* UIKit.framework in Frameworks */,
 				4F5BF4F0212D15EE00ECA403 /* Foundation.framework in Frameworks */,
+				4FD2810B2189B45B0026A1CD /* libhookzz.static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +116,7 @@
 		4F5BF4CA212D15EE00ECA403 = {
 			isa = PBXGroup;
 			children = (
+				4FD281042189B45B0026A1CD /* HookZz */,
 				4F5BF4D8212D15EE00ECA403 /* TencentSports */,
 				4F5BF4F3212D15EE00ECA403 /* TencentSportsDylib */,
 				4F5BF4EC212D15EE00ECA403 /* Frameworks */,
@@ -242,6 +252,17 @@
 			name = fishhook;
 			sourceTree = "<group>";
 		};
+		4FD281042189B45B0026A1CD /* HookZz */ = {
+			isa = PBXGroup;
+			children = (
+				4FD281052189B45B0026A1CD /* HookZzPrint.m */,
+				4FD281062189B45B0026A1CD /* HookZzObjcMsg.m */,
+				4FD281072189B45B0026A1CD /* libhookzz.static.a */,
+				4FD281082189B45B0026A1CD /* hookzz.h */,
+			);
+			path = HookZz;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -252,6 +273,7 @@
 				4F5BF4FA212D15EE00ECA403 /* LLDBTools.h in Headers */,
 				4F5BF503212D15EF00ECA403 /* MethodTrace.h in Headers */,
 				4F1ABE9E21782B9D0016F86C /* UITextView+assert.h in Headers */,
+				4FD2810C2189B45B0026A1CD /* hookzz.h in Headers */,
 				4F5BF4FF212D15EE00ECA403 /* ANYMethodLog.h in Headers */,
 				4F1ABEA321785AD00016F86C /* NSObject+methodSwizzle.h in Headers */,
 				4F5BF50F212D15EF00ECA403 /* fishhook.h in Headers */,
@@ -403,6 +425,8 @@
 			files = (
 				4F1ABEA221785AD00016F86C /* NSObject+methodSwizzle.m in Sources */,
 				4F5BF505212D15EF00ECA403 /* MethodTrace.m in Sources */,
+				4FD2810A2189B45B0026A1CD /* HookZzObjcMsg.m in Sources */,
+				4FD281092189B45B0026A1CD /* HookZzPrint.m in Sources */,
 				4F1ABE9F21782B9D0016F86C /* UITextView+assert.m in Sources */,
 				4F5BF50A212D15EF00ECA403 /* AntiAntiDebug.m in Sources */,
 				4F5BF4F7212D15EE00ECA403 /* TencentSportsDylib.mm in Sources */,
@@ -571,6 +595,7 @@
 					"$(inherited)",
 					"$(MonkeyDevPath)/Frameworks",
 					"$(MonkeyDevTheosPath)/vendor/lib/**",
+					"$(PROJECT_DIR)/HookZz",
 				);
 				MonkeyDevPath = /opt/MonkeyDev;
 				MonkeyDevTheosPath = /opt/theos;
@@ -634,6 +659,7 @@
 					"$(inherited)",
 					"$(MonkeyDevPath)/Frameworks",
 					"$(MonkeyDevTheosPath)/vendor/lib/**",
+					"$(PROJECT_DIR)/HookZz",
 				);
 				MonkeyDevPath = /opt/MonkeyDev;
 				MonkeyDevTheosPath = /opt/theos;
@@ -659,9 +685,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W9AD932V2V;
+				DEVELOPMENT_TEAM = 3H86J45429;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TencentSports/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HookZz",
+				);
 				MONKEYDEV_ADD_SUBSTRATE = YES;
 				MONKEYDEV_CLASS_DUMP = NO;
 				MONKEYDEV_INSERT_DYLIB = YES;
@@ -679,9 +709,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W9AD932V2V;
+				DEVELOPMENT_TEAM = 3H86J45429;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TencentSports/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HookZz",
+				);
 				MONKEYDEV_ADD_SUBSTRATE = YES;
 				MONKEYDEV_CLASS_DUMP = NO;
 				MONKEYDEV_INSERT_DYLIB = YES;
