@@ -109,8 +109,6 @@ CHMethod(1, void, TADVideoViewController, viewDidAppear, BOOL, arg1){
     return CHSuper(1, TADVideoViewController, viewDidAppear, arg1);
 }
 
-
-static BOOL g_canCopyM3u8 = YES;
 /*********NSURLSession**********/
 typedef void(^CompletionBlock)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error);
 CHMethod(2, id, NSURLSession, dataTaskWithRequest, id, arg1, completionHandler, CompletionBlock, arg2){
@@ -120,46 +118,6 @@ CHMethod(2, id, NSURLSession, dataTaskWithRequest, id, arg1, completionHandler, 
     
     NSString *urlString = request.URL.absoluteString;
     NSLog(@"hook到函数啦 url = %@", urlString);
-//    if ([urlString containsString:@"hls.bideo.qq.com"]) {
-//        NSLog(@"hook到直播请求啦");
-//        NSLog(@"线程回溯 = %@", [NSThread callStackSymbols]);
-//    }
-    
-//    CompletionBlock block = arg2;
-//    if ([request.URL.absoluteString containsString:@"info.zb.video.qq.com"]) {
-//        NSLog(@"hook到直播接口啦%@，参数为，request = %@", NSStringFromSelector(_cmd), arg1);
-//        // arg2居然是null，天啦！！
-//        __block BOOL isControllerRight = NO;
-//        void(^tempBlock)(void) = ^{
-//            UIWindow *window = [UIApplication sharedApplication].delegate.window;
-//            UITabBarController *tabBarVC =  (UITabBarController *)window.rootViewController;
-//            UINavigationController *vc = (UINavigationController *)tabBarVC.selectedViewController;
-//            UIViewController *topVC = vc.topViewController;
-//            if ([topVC isKindOfClass:[NSClassFromString(@"QSMatchDetailViewController") class]]) {
-//                isControllerRight = YES;
-//            }
-//        };
-//
-//        if ([NSThread isMainThread]) {
-//            tempBlock();
-//        } else {
-//            dispatch_sync(dispatch_get_main_queue(), tempBlock);
-//        }
-//
-//
-//        if (g_canCopyM3u8 && isControllerRight) {
-//            g_canCopyM3u8 = NO;
-//            block = ^(NSData *tempData, NSURLResponse *tempResponse, NSError *tempError){
-//                if (tempError) {
-//                    NSLog(@"请求m3u8出错啦，error = %@", tempError);
-//                    g_canCopyM3u8 = YES;
-//                } else {
-//                    NSLog(@"请求m3u8成功啦, response = %p, data = %p", tempResponse, tempData);
-//                }
-//            };
-//        }
-//
-//    }
     
     return CHSuper(2, NSURLSession, dataTaskWithRequest, arg1, completionHandler, arg2);
 }
@@ -228,6 +186,7 @@ CHMethod(2, id, NSURLConnection, initWithRequest, id, arg1, delegate, id, arg2){
     
     if ([urlString containsString:@"info.zb.video.qq.com"]) {
         NSLog(@"抓到直播信息接口啦------");
+        NSLog(@"调用堆栈: %@", [NSThread callStackSymbols]);
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
             if (connectionError) {
                 NSLog(@"连接出错了啊 error = %@", connectionError);

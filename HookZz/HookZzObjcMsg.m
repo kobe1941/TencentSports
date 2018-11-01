@@ -56,8 +56,14 @@ void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic 
         return;
     const char *className               = class_getName(tmpClass);
     
+    
     NSString *classStr = [NSString stringWithCString:className encoding:NSUTF8StringEncoding];
     
+    
+    
+//    NSString *selectorStr = [NSString stringWithCString:selector encoding:NSUTF8StringEncoding];
+    
+    /*
     static BOOL start = NO;
     if ([classStr isEqualToString:@"QSMatchDetailViewController"] && strstr(selector, "alloc")) {
         start = YES;
@@ -66,50 +72,178 @@ void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic 
     if (!start) {
         return;
     }
+     */
     
-    if ([classStr hasPrefix:@"NS"] || [classStr hasPrefix:@"_NS"] || [classStr hasPrefix:@"__NS"]) {
+/*
+    NSArray *classNameAvoid = @[
+                                @"QSOperationQueue",@"QSBusSystem",
+                                @"QBBeaconEvent",@"QSStateMachine",
+                                @"TADHTTPClientRequest",
+                                @"ASIFormDataRequest",
+                                @"QSImageCache",@"QSQueue",
+                                @"XMLDictionaryParser",
+                                @"QSPropertyInfoEx",@"QSSportsMediaMatchInfo",
+                                @"TSADP3Item",@"FMDatabase",
+                                @"AVPlayerItem",
+                                ];
+    NSArray *classPrefixAvoid = @[
+                                  @"NS",@"_NS",@"__NS",@"QSLog",@"QSDatabase",
+                                  @"UI",@"_UI",@"MTALogTrack",
+                                  @"MttMemory",@"VRPosition",@"QBReachability",@"QBBeaconAnalytics",
+                                  @"QSCache",@"LOT",@"ASIHTTPRequest",
+                                  @"LOT",
+                                  ];
+    NSArray *classSuffixAvoid = @[
+                                  @"Log",@"log",
+                                  @"Cell",
+                                  @"Layer",
+                                  @"Transaction",
+                                  @"LinkedList",
+                                  @"LinkedNode",
+                                  @"Socket",
+                                  @"Loading",
+                                  @"Store",
+                                  @"Node",
+                                  @"Queue",
+                                  @"TCPData",
+                                  @"Logger",
+                                  ];
+ */
+    
+   /****selector****/
+    /*
+    NSArray *selectorNameAvoid = @[
+                                   @"view",
+                                   @"presentingViewController",
+                                   @"parentViewController",
+                                   ];
+    
+    NSArray *selectorPrefixAvoid = @[
+                                     @"isKindOfClass",
+                                     @"class",
+                                     ];
+    NSArray *selectorContain = @[
+                                @"loading",
+                                @"Animation",
+                                @"valueForKey",
+                                ];
+     */
+    
+/*
+    for (NSString *tempName in classNameAvoid) {
+        if ([classStr isEqualToString:tempName]) {
+            return;
+        }
+    }
+    
+    for (NSString *tempName in classPrefixAvoid) {
+        if ([classStr hasPrefix:tempName]) {
+            return;
+        }
+    }
+    
+    for (NSString *tempName in classSuffixAvoid) {
+        if ([classStr hasSuffix:tempName]) {
+            return;
+        }
+    }
+    
+    for (NSString *tempSEL in selectorNameAvoid) {
+        if ([selectorStr isEqualToString:tempSEL]) {
+            return;
+        }
+    }
+    
+    for (NSString *tempSEL in selectorPrefixAvoid) {
+        if ([selectorStr hasPrefix:tempSEL]) {
+            return;
+        }
+    }
+    
+    for (NSString *tempSEL in selectorContain) {
+        if ([selectorStr containsString:tempSEL]) {
+            return;
+        }
+    }
+    
+    */
+
+    /*
+    static BOOL tryStart = NO;
+    if ([classStr isEqualToString:@"QSMPAuthenticationView"] || [classStr isEqualToString:@"QSMPMatchLiveAuthenticationView"]) {
+//        if (strstr(selector, "tryButtonPressed")) {
+         // 是调用的canTryWatch这个属性
+            tryStart = YES;
+//        }
+    }
+    
+    if (!tryStart) {
         return;
     }
     
-    if ([classStr hasPrefix:@"UI"] || [classStr hasPrefix:@"_UI"]) {
-        return;
-    }
+*/
     
-    if ([classStr hasPrefix:@"MTALogTrack"] || [classStr hasPrefix:@"QBBeaconEvent"]) {
-        return;
-    }
+    //
     
-    if ([classStr hasPrefix:@"MttMemory"] || [classStr hasPrefix:@"VRPosition"]) {
-        return;
-    }
-    
-    if ([classStr hasPrefix:@"QBReachability"] || [classStr hasPrefix:@"QBBeaconAnalytics"]) {
-        return;
-    }
-    
-    if ([classStr hasSuffix:@"Log"] || [classStr hasSuffix:@"log"]) {
-        return;
-    }
-    
-    if ([classStr hasPrefix:@"QSLog"] || [classStr hasPrefix:@"QSDatabase"]) {
-        return;
-    }
-    
-    // QSWeakedLinkedNode,QSWeakedLinkedList,QSCacheEntry,QSCache, MTAGCDAsyncSocket(socket)
-    // QSPropertyInfoEx,QSSportsMediaMatchInfo,
-    // LOTKeyframeGroup,LOTShapeGroup,LOTKeyframe,LOTLayer,LOTComposition,LOTAnimationCache,LOTAnimationView
-    // QSInMatchDetailTabBarCell,TADPlayerLoading,QSQueue
-    
-    
-//    if (strstr(className, "NS") && strstr(className, "UI")) {
-//        return;
+//    if ([classStr hasPrefix:@"TAD"] ) {
+//        return; ///< 这里值得商榷
 //    }
+    
+    /*
+    
+    //类名包含 Media 的就打印出来
+    NSArray *classNameContainsLog = @[
+                                      @"Media",
+                                      @"TryWatch",
+                                      @"tryWatch",
+                                      @"QLTryWatchView",
+                                      @"QLTryWatchViewController",
+                                      @"QSVideoPlayerTryWatchProgressViewController",
+                                      @"QSMatchDetailTopViewController",
+                                      @"QSMatchSkipViewController",
+                                      @"QSMatchDetailViewController",
+                                      @"Authentication",
+                                      @"QSUserInfoManagement",
+                                      @"QSVIPInfo",
+                                      @"vip",
+                                      @"VIP",
+                                      ];
+    
+    NSArray *selectorNameContainsLog = @[
+                                         @"vip",
+                                         @"",
+                                         @"",
+                                         @"",
+                                         ];
+
+    BOOL shoudLog = NO;
+    for (NSString *tempName in classNameContainsLog) {
+        if ([classStr containsString:tempName]) {
+            shoudLog = YES;
+            break;
+        }
+    }
+    
+    
+    for (NSString *tempName in selectorNameContainsLog) {
+        if ([selectorStr containsString:tempName]) {
+            shoudLog = YES;
+            break;
+        }
+    }
+
+     
+     */
+    
+    
     
     
     memset(decollators, '-', 512);
     if (ts->size * 3 >= 512)
         return;
     decollators[ts->size * 3] = '\0';
+    
+    
     
 //    printf("[OCMethodMonitor|%ld] %s [%s %s]\n", ts->thread_id, decollators, className, selector);
     
