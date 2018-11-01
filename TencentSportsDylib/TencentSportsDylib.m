@@ -270,7 +270,7 @@ CHConstructor{
     
     CHLoadLateClass(NSURLConnection);
     CHClassHook(3, NSURLConnection, initWithRequest, delegate, startImmediately);
-//    CHClassHook(2, NSURLConnection, initWithRequest, delegate);
+    CHClassHook(2, NSURLConnection, initWithRequest, delegate);
     CHClassHook(2, NSURLConnection, connectionWithRequest, delegate);
 }
 

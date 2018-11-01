@@ -56,6 +56,7 @@ void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic 
         return;
     const char *className               = class_getName(tmpClass);
     
+    return;
     
     NSString *classStr = [NSString stringWithCString:className encoding:NSUTF8StringEncoding];
     
