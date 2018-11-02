@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F15D7D4218BF67800300629 /* libhookzz.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4F7E6999218B1D7F006D03FA /* libhookzz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F1ABE9E21782B9D0016F86C /* UITextView+assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F1ABE9C21782B9D0016F86C /* UITextView+assert.h */; };
 		4F1ABE9F21782B9D0016F86C /* UITextView+assert.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1ABE9D21782B9D0016F86C /* UITextView+assert.m */; };
 		4F1ABEA221785AD00016F86C /* NSObject+methodSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1ABEA021785AD00016F86C /* NSObject+methodSwizzle.m */; };
@@ -51,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4F15D7D4218BF67800300629 /* libhookzz.dylib in CopyFiles */,
 				4F5BF4E9212D15EE00ECA403 /* libTencentSportsDylib.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,7 +383,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = /opt/MonkeyDev/Tools/pack.sh;
+			shellScript = "/opt/MonkeyDev/Tools/pack.sh\n";
 		};
 		4F5BF4D4212D15EE00ECA403 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -394,7 +396,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/MonkeyDev/Tools/pack.sh codesign";
+			shellScript = "/opt/MonkeyDev/Tools/pack.sh codesign\n";
 		};
 		4F5BF4E3212D15EE00ECA403 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -407,7 +409,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/opt/MonkeyDev/bin/md --xcbp-logos";
+			shellScript = "/opt/MonkeyDev/bin/md --xcbp-logos\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+/*
 int (*orig_printf)(const char * restrict format, ...);
 int fake_printf(const char * restrict format, ...) {
 //    puts("call printf");
@@ -19,6 +20,7 @@ int fake_printf(const char * restrict format, ...) {
     int x = orig_printf(format, stack[0], stack[1], stack[2], stack[3], stack[4], stack[5], stack[6], stack[7], stack[8], stack[9], stack[10], stack[11], stack[12], stack[13], stack[14], stack[15]);
     return x;
 }
+ */
 
 /*
 void printf_pre_call(RegState *rs, ThreadStackPublic *threadstack, CallStackPublic *callstack) {
