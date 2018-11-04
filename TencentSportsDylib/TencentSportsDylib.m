@@ -314,8 +314,8 @@ CHConstructor{
     CHClassHook(2, NSURLConnection, initWithRequest, delegate);
     CHClassHook(2, NSURLConnection, connectionWithRequest, delegate);
     
-    CHLoadLateClass(QSMediaPlayerViewController);
-    CHClassHook(1, QSMediaPlayerViewController, setPlayerState);
-    CHClassHook(0, QSMediaPlayerViewController, playerState);
+//    CHLoadLateClass(QSMediaPlayerViewController);
+//    CHClassHook(1, QSMediaPlayerViewController, setPlayerState);
+//    CHClassHook(0, QSMediaPlayerViewController, playerState);
 }
 
