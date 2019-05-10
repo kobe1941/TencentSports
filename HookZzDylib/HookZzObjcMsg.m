@@ -26,28 +26,73 @@
 
 char decollators[512]           = {0};
 
+#define FAKE(func) fake_##func
+#define ORIG(func) orig_##func
+
+
+
+
+
 @interface OCMethodMonitor : NSObject
 
 @end
 
 @implementation OCMethodMonitor
 
-+ (void)load {
-    [self hook_objc_msgSend];
-    OCMethodMonitor *z = [OCMethodMonitor new];
-    [z log_for_test];
+//void (*origin_objc_msgSend)(id _Nullable obj, SEL _Nonnull op);
+//OBJC_EXPORT id _Nullable
+//origin_objc_msgSend(id _Nullable obj, SEL _Nonnull op)
+//OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0, 2.0);
+
+id (*origin_objc_msgSend)(id obj, SEL _Nonnull op, ...);
+
+id (fake_objc_msgSend)(id obj, SEL _Nonnull op, ...) {
+    // Do What you Want.
+    
+    NSLog(@"---+++[%@ %@]", NSStringFromClass([obj class]), NSStringFromSelector(op));
+    
+    va_list args;
+    
+    va_start(args, op);
+    
+    if (op)
+    {
+        //依次取得除第一个参数以外的参数
+        //4.va_arg(args,NSString)：返回参数列表中指针所指的参数，返回类型为NSString，并使参数指针指向参数列表中下一个参数。
+        while (va_arg(args, id))
+        {
+            NSString *otherString = va_arg(args, id);
+        }
+    }
+    
+    
+    
+    id value = origin_objc_msgSend(obj, op, args);
+    
+    //5.清空参数列表，并置参数指针args无效
+    va_end(args);
+    
+    return value;
+    
 }
+
+void hook_objc_msgSend() {
+    ZzReplace((void *)objc_msgSend, (void *)fake_objc_msgSend, (void **)&origin_objc_msgSend);
+}
+
++ (void)load
+{
+//    hook_objc_msgSend();
+}
+
 
 - (void)log_for_test {
     NSLog(@"catch by HookZz:OCMethodMonitor");
 }
 
-+ (void)hook_objc_msgSend {
-    DebugLogControlerEnableLog();
-    ZzHookGOT("objc_msgSend", NULL, NULL, objc_msgSend_pre_call, objc_msgSend_post_call);
-}
 
-void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic *cs, const HookEntryInfo *info)
+//void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic *cs, const HookEntryInfo *info)
+/*
 {
     char *selector = (char *)rs->ZREG(1);
     id tmpObject = (id)rs->ZREG(0);
@@ -238,7 +283,7 @@ void objc_msgSend_pre_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic 
     
     
     
-    
+  /*
     memset(decollators, '-', 512);
     if (ts->size * 3 >= 512)
         return;
@@ -256,5 +301,6 @@ void objc_msgSend_post_call(RegState *rs, ThreadStackPublic *ts, CallStackPublic
 //    printf("post call success.\n");
 }
 
+   */
 @end
 

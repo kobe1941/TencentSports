@@ -76,6 +76,9 @@ CHDeclareClass(TADSplashManager);
 CHDeclareClass(TADVideoViewController);
 CHDeclareClass(NSURLSession);
 CHDeclareClass(NSURLConnection);
+CHDeclareClass(QSMediaPlayerViewController);
+
+
 
 
 #pragma clang diagnostic push
@@ -186,6 +189,7 @@ CHMethod(2, id, NSURLConnection, initWithRequest, id, arg1, delegate, id, arg2){
     
     if ([urlString containsString:@"info.zb.video.qq.com"]) {
         NSLog(@"抓到直播信息接口啦------");
+        NSLog(@"request = %@", arg1);
         NSLog(@"调用堆栈: %@", [NSThread callStackSymbols]);
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
             if (connectionError) {
@@ -247,6 +251,43 @@ CHMethod(2, id, NSURLConnection, connectionWithRequest, id, arg1, delegate, id, 
     return CHSuper(2, NSURLConnection, connectionWithRequest, arg1, delegate, arg2);
 }
 
+/*******/
+CHMethod(1, void, QSMediaPlayerViewController, setPlayerState, int, arg1){
+    // arg1=URL
+    NSLog(@"hook到 %@ 函数啦%@，参数 arg1 = %ld", self, NSStringFromSelector(_cmd), arg1);
+    
+    
+    NSObject *object = self;
+    
+    int state = arg1;
+//    if (arg1 == 4) {
+//        state = 6;
+//        NSLog(@"修改state为6");
+//    }
+   
+    
+    return CHSuper(1, QSMediaPlayerViewController, setPlayerState, state);
+}
+
+CHMethod(0, int, QSMediaPlayerViewController, playerState){
+    // arg1=URL
+    NSLog(@"hook到 %@ 函数啦%@", self, NSStringFromSelector(_cmd));
+    
+    
+//    NSObject *object = self;
+//    if ([object respondsToSelector:@selector(playerState)]) {
+//       int state = [object performSelector:@selector(playerState)];
+//        NSLog(@"state = %d", state);
+//    }
+    
+//    int state = [object valueForKey:@"playState"] ;
+    
+    int state = CHSuper(0, QSMediaPlayerViewController, playerState);
+    NSLog(@"state = %d", state);
+//    state = 6;
+    
+    return  state;
+}
 
 CHConstructor{
     CHLoadLateClass(TADSplashManager);
@@ -270,7 +311,11 @@ CHConstructor{
     
     CHLoadLateClass(NSURLConnection);
     CHClassHook(3, NSURLConnection, initWithRequest, delegate, startImmediately);
-//    CHClassHook(2, NSURLConnection, initWithRequest, delegate);
+    CHClassHook(2, NSURLConnection, initWithRequest, delegate);
     CHClassHook(2, NSURLConnection, connectionWithRequest, delegate);
+    
+    CHLoadLateClass(QSMediaPlayerViewController);
+    CHClassHook(1, QSMediaPlayerViewController, setPlayerState);
+    CHClassHook(0, QSMediaPlayerViewController, playerState);
 }
 
