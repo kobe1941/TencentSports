@@ -260,10 +260,10 @@ CHMethod(1, void, QSMediaPlayerViewController, setPlayerState, int, arg1){
     NSObject *object = self;
     
     int state = arg1;
-    if (arg1 == 4) {
-        state = 6;
-        NSLog(@"修改state为6");
-    }
+//    if (arg1 == 4) {
+//        state = 6;
+//        NSLog(@"修改state为6");
+//    }
    
     
     return CHSuper(1, QSMediaPlayerViewController, setPlayerState, state);
@@ -314,8 +314,8 @@ CHConstructor{
     CHClassHook(2, NSURLConnection, initWithRequest, delegate);
     CHClassHook(2, NSURLConnection, connectionWithRequest, delegate);
     
-//    CHLoadLateClass(QSMediaPlayerViewController);
-//    CHClassHook(1, QSMediaPlayerViewController, setPlayerState);
-//    CHClassHook(0, QSMediaPlayerViewController, playerState);
+    CHLoadLateClass(QSMediaPlayerViewController);
+    CHClassHook(1, QSMediaPlayerViewController, setPlayerState);
+    CHClassHook(0, QSMediaPlayerViewController, playerState);
 }
 
